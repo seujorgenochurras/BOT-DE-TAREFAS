@@ -1,3 +1,9 @@
+*.env
+.vscode/
+*.txt
+BACKUP_tarefas.json
+
+
 # Logs
 logs
 *.log

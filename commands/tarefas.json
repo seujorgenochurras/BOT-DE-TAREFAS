@@ -1,0 +1,85 @@
+{
+
+  "Tarefa teste 1": {
+    "nome": "Tarefa teste 1",
+    "descricao1": "Copiar do livro a pg **69** inteira; \\n Responder também",
+    "descricao2": "```Faça tudo que vc conseguir resolver; \\n (na dúvida pesquisa no brainly)```",
+    "descricao3": "",
+    "materia": "Matemática",
+    "dataT": "01/08/2022",
+    "curso": true
+  },
+  "Tarefa de testes2": {
+    "nome": "Tarefa de testes2",
+    "descricao1": "Pesquise sobre arvores",
+    "descricao2": " ``` Falar  renda ``` ",
+    "descricao3": "Entregar  **IMPRESSO **",
+    "materia": "Português",
+    "dataT": "20/13/2022",
+    "curso": false
+  },
+  "Tarefa de testes3": {
+    "nome": "Tarefa de testes3",
+    "descricao1": "Pesquise sobre alguém \\n muito legal \\n na Wikipedia",
+    "descricao2": " ``` Falar sobre : \\n Bibliografia, amigos \\n emprego e renda ``` ",
+    "descricao3": "Entregar  **IMPRESSO **",
+    "materia": "Quimica",
+    "dataT": "20/13/2022",
+    "curso": true
+  },
+  "Tarefa de testes5": {
+    "nome": "Tarefa de testes5",
+    "descricao1": "faz aquilo lá",
+    "descricao2": " ``` emprego e renda ``` ",
+    "descricao3": "Entregar  **IMPRESSO **",
+    "materia": "Fisica",
+    "dataT": "20/13/2022",
+    "curso": true
+  },
+  "Tarefa de testes7": {
+    "nome": "Tarefa de testes7",
+    "descricao1": "queimar todos os livros",
+    "descricao2": " ``` Bibliografia, amigos renda ``` ",
+    "descricao3": "IMPRESSO",
+    "materia": "Matemática",
+    "dataT": "20/13/2022",
+    "curso": true
+  },
+  
+    "Tarefa de artes": {
+      "nome": "Tarefa de artes",
+      "descricao1": "Faça uma biografia de Anita Malfatti",
+      "descricao2": " ``` Destaques: \\n Nascimento, \\n Morte, \\n Onde estudou, \\n Acontecimento-arte, 1°exposição no Brasil, críticas => influência para a semana de 22 materia: materia: artes data: 14/07/2022 curso: true descricao3: No caderno \\n Pode fazer em lista \\n Com caneta ``` ",
+      "descricao3": "No caderno \\n Pode fazer em lista \\n Com caneta",
+      "materia": "artes",
+      "dataT": "21/02/2021",
+      "curso": true
+    },
+    "Tarefa de testes": {
+      "nome": "Tarefa de testes",
+      "descricao1": "Pesquise sobre alguém \\n muito legal \\n na Wikipedia",
+      "descricao2": " ``` Falar sobre : \\n Bibliografia, amigos \\n emprego e renda ``` ",
+      "descricao3": "Entregar  **IMPRESSO **",
+      "materia": "história",
+      "dataT": "20/13/2022",
+      "curso": true
+    },
+    "1-- Tarefa de sim": {
+      "nome": "1-- Tarefa de sim",
+      "descricao1": "Faça um resumo de qualquer coisa",
+      "descricao2": " ```No caderno \\n folha de papel \\n a lápis \\n ``` ",
+      "descricao3": "AAAAAAAAAAAAAAAAAAAA",
+      "materia": "noruega",
+      "dataT": "20/21/2022",
+      "curso": false
+    },
+    "a": {
+      "nome": "a",
+      "descricao1": "a",
+      "descricao2": " ``` a ``` ",
+      "descricao3": " ",
+      "materia": "a",
+      "dataT": "a",
+      "curso": true
+    }
+  }
