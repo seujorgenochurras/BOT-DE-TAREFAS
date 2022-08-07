@@ -2,6 +2,7 @@
 import * as fs from "fs"
 
 
+
 /**
  * Retorna o length do seu objeto
  * @param {Object} yourObject Objeto
@@ -17,6 +18,50 @@ export function getObjectSize(yourObject: Object): number {
   return a;
 }
 
+/**
+ * 
+ * @param embedType basic, curso, tarefas
+ * @param yourEmbed embed a ser adicionado o layout
+ * @param tarefa se for do layout tarefas, preciso saber as informações das tarefas
+ * @returns seu embed com o layout
+ */
+function getEmbedLayout(embedType: string, yourEmbed: MessageEmbed | any, tarefa?: string | any): MessageEmbed {
+  if (embedType === "basic") {
+    yourEmbed
+      .setTitle('========================================== \t **Tarefas da sala** ==========================================')
+      .setColor(0xf1dd04)
+      .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "curso") {
+
+    yourEmbed
+      .setTitle('Tarefas do curso')
+      .setColor(0x1DB8EE)
+      .setThumbnail('https://b.thumbs.redditmedia.com/FyLIOzKOXeG4nqUxYv4gRM9JI1Vv39T4u7WSRAbnusY.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "tarefas") {
+
+    yourEmbed.addField(`${tarefa.nome} \t ${tarefa.curso ? "🖥️" : ""}
+*${tarefa.materia}*
+      `,
+      `
+        ${newLine(tarefa.descricao1)} 
+
+  ${newLine(tarefa.descricao2)}
+
+  
+  ${newLine(tarefa.descricao3)}
+  
+      ${tarefa.dataT}`, true)
+    yourEmbed.setTimestamp()
+    yourEmbed.addField('\u200B', '\u200B', true) //vertical
+
+  }
+  return yourEmbed
+}
+
 
 /**
  * Cria embeds de tarefas e coloca elas em um array
@@ -27,80 +72,32 @@ export function getObjectSize(yourObject: Object): number {
 export function embedPages(paginadelete: number): MessageEmbed[] {
   let tarefasJ = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
   const embeds: MessageEmbed[] = [];
-  let embedAlign = 0;
-  let a = 0;
+  let a = 0; //pagina
   let b = 0;
-  let newEmbed;
+  let newEmbed = new MessageEmbed();
   for (let x in tarefasJ) {
     if (x === 'default') continue;
-    a++;
-    b++;
-    if (b !== paginadelete) {
-      newEmbed = new MessageEmbed()
+    a++; //pagina atual
+    b++; //pagina temporaria (se b == numero de págima por embed,  b = 0)
 
-      newEmbed.addField(`${tarefasJ[x].nome} \t ${tarefasJ[x].curso ? "🖥️" : ""}
-*${tarefasJ[x].materia}*
-      `,
-        `
-        ${newLine(tarefasJ[x].descricao1)} 
+    newEmbed = getEmbedLayout("tarefas", newEmbed, tarefasJ[x])
 
-  ${newLine(tarefasJ[x].descricao2)}
-
-  
-  ${newLine(tarefasJ[x].descricao3)}
-  
-      ${tarefasJ[x].dataT}`, true)
-      newEmbed.setTimestamp()
-      newEmbed?.addField('\u200B', '\u200B', true) //vertical
-
-      if (embedAlign === 2) {
-        newEmbed?.addField('\u200B', '\u200B') //horizontal
-        embedAlign = 0
-      }
-      if (getObjectSize(tarefasJ) === a) {
-        newEmbed
-          .setTitle('Tarefas da sala')
-          .setColor(0xf1dd04)
-          .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
-          .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
-          .setTimestamp()
-        embeds.push(newEmbed)
-      }
-    } else {
-
-
-      newEmbed?.addField(`${tarefasJ[x].nome} \t ${tarefasJ[x].curso ? "🖥️" : ""}
-*${tarefasJ[x].materia}*
-      `,
-        
-        `  ${newLine(tarefasJ[x].descricao1)}
-
-  ${newLine(tarefasJ[x].descricao2)}
-  
-  ${newLine(tarefasJ[x].descricao3)}
-  
-      ${tarefasJ[x].dataT}`, true)
-      newEmbed?.addField('\u200B', '\u200B', true) //vertical
-
-      if (embedAlign === 2) {
-        newEmbed?.addField('\u200B', '\u200B') //horizontal
-        embedAlign = 0
-      }
-
-      if (newEmbed != undefined) {
-        newEmbed
-          .setTitle('Tarefas da sala')
-          .setColor(0xf1dd04)
-          .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
-          .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
-          .setTimestamp()
-
-        b = 0
-        embeds.push(newEmbed)
-
-      }
+    if (a % 2 === 0) {
+      newEmbed.addField('\u200B', '\u200B') //horizontal
     }
 
+
+    if (newEmbed && b == paginadelete) {
+      newEmbed = getEmbedLayout("basic", newEmbed)
+      b = 0;
+      embeds.push(newEmbed)
+      newEmbed = new MessageEmbed()
+    }
+
+    if (getObjectSize(tarefasJ) === a) { //se está na ultima página
+      newEmbed = getEmbedLayout("basic", newEmbed)
+      embeds.push(newEmbed)
+    }
   }
   return embeds;
 }
@@ -112,7 +109,7 @@ export function embedPages(paginadelete: number): MessageEmbed[] {
  * @param {String} separador quebra a linha quando encontra esse separador, optinal
  * @returns texto com as quebras de linha
  */
-export function newLine(texto: String, separador: string = "\\n") {
+export function newLine(texto: string, separador: string = "\\n") {
   let array = texto.split(" ")
   let idx = array.indexOf(separador)
 

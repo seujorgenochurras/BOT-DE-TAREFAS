@@ -3,7 +3,9 @@ import { Interaction, Message, MessageActionRow, MessageButton, MessageEmbed } f
 import { ICommand } from "wokcommands";
 import { embedPages } from "../notComands/functions";
 
-let embeds = embedPages(2)
+
+const numberOfTarefasPerPage = 2;
+let embeds = embedPages(numberOfTarefasPerPage)
 
 
 const pages = {} as { [key: string]: number }
@@ -39,7 +41,7 @@ export default {
   slash: 'both',
 
   callback: async ({ user, message, interaction, channel }) => {
-    embeds = embedPages(2)
+    embeds = embedPages(numberOfTarefasPerPage)
     let reply: Message | undefined
 
     let collector

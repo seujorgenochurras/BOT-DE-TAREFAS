@@ -1,100 +1,83 @@
-
 import { Interaction, Message, MessageActionRow, MessageButton, MessageEmbed } from "discord.js";
 import { ICommand } from "wokcommands";
-import {getObjectSize, newLine } from "../notComands/functions";
+import { getObjectSize, newLine } from "../notComands/functions";
 import fs from "fs";
 
-import merge from "lodash.merge";
+const numberOfTarefasPerPage = 2;
 
-const embedLayout = new MessageEmbed()
-  .setTitle('Tarefas da sala')
-  .setColor(0xf1dd04)
-  .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
-  .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
-  .setTimestamp()
-const embedTarefasLayout = new MessageEmbed() 
+function getEmbedLayout(embedType: string, yourEmbed: MessageEmbed | any, tarefa?: string | any): MessageEmbed {
 
-function createEmbedTarefas(rootJSON: string | any) {
+  if (embedType === "basic") {
+    yourEmbed
+      .setTitle('========================================== \t **Tarefas da sala** ==========================================')
+      .setColor(0xf1dd04)
+      .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "curso") {
+
+    yourEmbed
+      .setTitle('Tarefas do curso')
+      .setColor(0x1DB8EE)
+      .setThumbnail('https://b.thumbs.redditmedia.com/FyLIOzKOXeG4nqUxYv4gRM9JI1Vv39T4u7WSRAbnusY.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "tarefas") {
+
+    yourEmbed.addField(`${tarefa.nome} \t ${tarefa.curso ? "🖥️" : ""}
+*${tarefa.materia}*
+      `,
+      `
+        ${newLine(tarefa.descricao1)} 
+
+  ${newLine(tarefa.descricao2)}
+
   
-  for (let x in rootJSON) {
-    if (x === 'default') continue;
+  ${newLine(tarefa.descricao3)}
+  
+      ${tarefa.dataT}`, true)
+    yourEmbed.setTimestamp()
+    yourEmbed.addField('\u200B', '\u200B', true) //vertical
+
   }
-
+  return yourEmbed
 }
-
 
 
 function embedPages(paginadelete: number): MessageEmbed[] {
   let tarefasJ = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
   const embeds: MessageEmbed[] = [];
-  let embedAlign = 0;
-  let a = 0;
+  let a = 0; //pagina
   let b = 0;
-  let newEmbed;
+  let newEmbed = new MessageEmbed();
   for (let x in tarefasJ) {
     if (x === 'default') continue;
-    a++;
-    b++;
-    if (b !== paginadelete) {
+    a++; //pagina atual
+    b++; //pagina temporaria (se b == numero de págima por embed,  b = 0)
+  
+    newEmbed = getEmbedLayout("tarefas", newEmbed, tarefasJ[x])
 
+    if (a % 2 === 0) {
+      newEmbed.addField('\u200B', '\u200B') //horizontal
+    }
+
+
+    if (newEmbed && b == paginadelete) {
+      newEmbed = getEmbedLayout("basic", newEmbed)
+      b = 0;
+      embeds.push(newEmbed)
       newEmbed = new MessageEmbed()
+    }
 
-      newEmbed.addField(`${tarefasJ[x].nome} \t ${tarefasJ[x].curso ? "🖥️" : ""}
-*${tarefasJ[x].materia}*
-      `,
-        `
-        ${newLine(tarefasJ[x].descricao1)} 
-
-  ${newLine(tarefasJ[x].descricao2)}
-
-  
-  ${newLine(tarefasJ[x].descricao3)}
-  
-      ${tarefasJ[x].dataT}`, true)
-      newEmbed.setTimestamp()
-      newEmbed?.addField('\u200B', '\u200B', true) //vertical
-
-      if (embedAlign === 2) {
-        newEmbed?.addField('\u200B', '\u200B') //horizontal
-        embedAlign = 0
-      }
-      if (getObjectSize(tarefasJ) === a) { //se está na ultima página
-        merge(newEmbed, embedLayout)
-
-        embeds.push(newEmbed)
-      }
-    } else {
-      newEmbed?.addField(`${tarefasJ[x].nome} \t ${tarefasJ[x].curso ? "🖥️" : ""}
-*${tarefasJ[x].materia}*
-      `,
-
-        `  ${newLine(tarefasJ[x].descricao1)}
-
-  ${newLine(tarefasJ[x].descricao2)}
-  
-  ${newLine(tarefasJ[x].descricao3)}
-  
-      ${tarefasJ[x].dataT}`, true)
-      newEmbed?.addField('\u200B', '\u200B', true) //vertical
-
-      if (embedAlign === 2) {
-        newEmbed?.addField('\u200B', '\u200B') //horizontal
-        embedAlign = 0
-      }
-
-      if (newEmbed) {
-        merge(newEmbed, embedLayout)
-
-        b = 0;
-        embeds.push(newEmbed)
-
-      }
+    if (getObjectSize(tarefasJ) === a) { //se está na ultima página
+      newEmbed = getEmbedLayout("basic", newEmbed)
+      embeds.push(newEmbed)
     }
   }
   return embeds;
 }
 
-let embeds = embedPages(2)
+let embeds = embedPages(numberOfTarefasPerPage)
 
 const pages = {} as { [key: string]: number }
 
@@ -129,7 +112,7 @@ export default {
   slash: 'both',
 
   callback: async ({ user, channel }) => {
-    embeds = embedPages(2)
+    embeds = embedPages(numberOfTarefasPerPage)
     let reply: Message | undefined
 
     let collector
@@ -180,4 +163,3 @@ export default {
   },
 
 } as ICommand
-
