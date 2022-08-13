@@ -1,5 +1,4 @@
 {
-
   "Tarefa teste 1": {
     "nome": "Tarefa teste 1",
     "descricao1": "Copiar do livro a pg **69** inteira; \\n Responder também",
@@ -7,7 +6,8 @@
     "descricao3": "",
     "materia": "Matemática",
     "dataT": "01/08/2022",
-    "curso": true
+    "curso": true,
+    "grupo": "GB"
   },
   "Tarefa de testes2": {
     "nome": "Tarefa de testes2",
@@ -16,7 +16,8 @@
     "descricao3": "Entregar  **IMPRESSO **",
     "materia": "Português",
     "dataT": "20/13/2022",
-    "curso": false
+    "curso": true,
+    "grupo": "GB"
   },
   "Tarefa de testes3": {
     "nome": "Tarefa de testes3",
@@ -25,61 +26,67 @@
     "descricao3": "Entregar  **IMPRESSO **",
     "materia": "Quimica",
     "dataT": "20/13/2022",
-    "curso": true
+    "curso": false,
+    "grupo": null
   },
-  "Tarefa de testes5": {
-    "nome": "Tarefa de testes5",
-    "descricao1": "faz aquilo lá",
-    "descricao2": " ``` emprego e renda ``` ",
-    "descricao3": "Entregar  **IMPRESSO **",
-    "materia": "Fisica",
-    "dataT": "20/13/2022",
-    "curso": true
+  "Tarefa braba demais": {
+    "nome": "Tarefa braba demais",
+    "descricao1": "Muito boa essa tarefa",
+    "descricao2": " ``` boa pra caralho mesmo \\n ela é muito boa \\n vou até fazer agora de tão boa que é ``` ",
+    "descricao3": "plodwadawdawd",
+    "materia": "História",
+    "dataT": "20/21/2121",
+    "curso": false,
+    "grupo": null
   },
-  "Tarefa de testes7": {
-    "nome": "Tarefa de testes7",
-    "descricao1": "queimar todos os livros",
-    "descricao2": " ``` Bibliografia, amigos renda ``` ",
-    "descricao3": "IMPRESSO",
-    "materia": "Matemática",
-    "dataT": "20/13/2022",
-    "curso": true
+  "minha saqueta": {
+    "nome": "minha saqueta",
+    "descricao1": "12312312",
+    "descricao2": " ``` smepre ``` ",
+    "descricao3": "awdawdawdaw",
+    "materia": "eu gosto",
+    "dataT": "20/21/2121",
+    "curso": false,
+    "grupo": null
   },
-  
-    "Tarefa de artes": {
-      "nome": "Tarefa de artes",
-      "descricao1": "Faça uma biografia de Anita Malfatti",
-      "descricao2": " ``` Destaques: \\n Nascimento, \\n Morte, \\n Onde estudou, \\n Acontecimento-arte, 1°exposição no Brasil, críticas => influência para a semana de 22 materia: materia: artes data: 14/07/2022 curso: true descricao3: No caderno \\n Pode fazer em lista \\n Com caneta ``` ",
-      "descricao3": "No caderno \\n Pode fazer em lista \\n Com caneta",
-      "materia": "artes",
-      "dataT": "21/02/2021",
-      "curso": true
-    },
-    "Tarefa de testes": {
-      "nome": "Tarefa de testes",
-      "descricao1": "Pesquise sobre alguém \\n muito legal \\n na Wikipedia",
-      "descricao2": " ``` Falar sobre : \\n Bibliografia, amigos \\n emprego e renda ``` ",
-      "descricao3": "Entregar  **IMPRESSO **",
-      "materia": "história",
-      "dataT": "20/13/2022",
-      "curso": true
-    },
-    "1-- Tarefa de sim": {
-      "nome": "1-- Tarefa de sim",
-      "descricao1": "Faça um resumo de qualquer coisa",
-      "descricao2": " ```No caderno \\n folha de papel \\n a lápis \\n ``` ",
-      "descricao3": "AAAAAAAAAAAAAAAAAAAA",
-      "materia": "noruega",
-      "dataT": "20/21/2022",
-      "curso": false
-    },
-    "a": {
-      "nome": "a",
-      "descricao1": "a",
-      "descricao2": " ``` a ``` ",
-      "descricao3": " ",
-      "materia": "a",
-      "dataT": "a",
-      "curso": true
-    }
+  "AAAAAAAAAAAAAAAAAAAAA": {
+    "nome": "AAAAAAAAAAAAAAAAAAAAA",
+    "descricao1": "AAAAAAAAAAAAAAA",
+    "descricao2": " ``` AAAAAAAAAAAAAAAAA ``` ",
+    "descricao3": "213123AWDAWDA",
+    "materia": "AAAAAAAAAAAAAAA",
+    "dataT": "21/21/21221",
+    "curso": true,
+    "grupo": "GA"
+  },
+  "awdawzxczxczxczxc": {
+    "nome": "awdawzxczxczxczxc",
+    "descricao1": "zxczxczxczxcasdasdqwezxc",
+    "descricao2": " ``` zxcasdqweertcfgvcb ``` ",
+    "descricao3": "",
+    "materia": "zxcsadtgrty",
+    "dataT": "21/21/2123",
+    "curso": true,
+    "grupo": "GA"
+  },
+  "ghj": {
+    "nome": "ghj",
+    "descricao1": "ghj",
+    "descricao2": " ``` gh ``` ",
+    "descricao3": "",
+    "materia": "jghjghjgh",
+    "dataT": "2",
+    "curso": true,
+    "grupo": "GA"
+  },
+  "uhkfhtg": {
+    "nome": "uhkfhtg",
+    "descricao1": "adscvb",
+    "descricao2": " ``` q2576 ``` ",
+    "descricao3": "awdwda",
+    "materia": "wqethf",
+    "dataT": "212",
+    "curso": false,
+    "grupo": "undefined"
   }
+}

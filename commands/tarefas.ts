@@ -51,12 +51,9 @@ export default {
 
     const embed = embeds[pages[id]]
 
-
     const filter = (i: Interaction) => i.user.id === user.id
 
-
-
-    const time = 3000
+    const time = 30000 //em ms
 
     reply = await channel.send({ embeds: [embed], components: [getRow(id)] });
 
@@ -71,7 +68,6 @@ export default {
 
       if (btnInt.customId === "anterior_embed" && pages[id] > 0) --pages[id];
       if (btnInt.customId === "proximo_embed" && pages[id] < embeds.length - 1) ++pages[id];
-
 
       if (reply) {
         reply.edit({
