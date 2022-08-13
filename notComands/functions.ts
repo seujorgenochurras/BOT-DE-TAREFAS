@@ -1,27 +1,7 @@
-import { MessageEmbed, MessageEmbedThumbnail } from "discord.js";
+ import { MessageEmbed } from "discord.js";
 import * as fs from "fs"
 
 
-
-
-export interface tarefaInterface{
-  nome: string
-  curso: boolean
-  materia: string
-  descricao1: string
-  descricao2: string
-  descricao3: string
-  dataT: string
-  grupo: string
-}
-
-
-export type embedType =
-  | "basic"
-  | "curso"
-  | "tarefas"
-  | null
-  
 
 /**
  * Retorna o length do seu objeto
@@ -45,53 +25,44 @@ export function getObjectSize(yourObject: Object): number {
  * @param tarefa se for do layout tarefas, preciso saber as informações das tarefas
  * @returns seu embed com o layout
  */
-function getEmbedLayout(embedType: embedType, yourEmbed: MessageEmbed, tarefa?: tarefaInterface, isCurso?: boolean): MessageEmbed {
+function getEmbedLayout(embedType: string, yourEmbed: MessageEmbed | any, tarefa?: string | any): MessageEmbed {
+  if (embedType === "basic") {
+    yourEmbed
+      .setTitle('========================================== \t **Tarefas da sala** ==========================================')
+      .setColor(0xf1dd04)
+      .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "curso") {
 
-  switch (embedType) {
-    case "basic": {
-      yourEmbed
-        .setTitle('========== \t **Tarefas da sala** ==========')
-        .setColor(0xf1dd04)
-        .setThumbnail('https://i1.sndcdn.com/avatars-nY46PZXw9sxmELaS-T44ywQ-t500x500.jpg')
-        .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
-        .setTimestamp()
-    }
-      break;
-    case "curso": {
-      yourEmbed
-        .setTitle('========== \t **Tarefas do *curso* ** ==========')
-        .setColor(0x1DB8EE)
-        .setThumbnail('https://b.thumbs.redditmedia.com/FyLIOzKOXeG4nqUxYv4gRM9JI1Vv39T4u7WSRAbnusY.jpg')
-        .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
-        .setTimestamp()
+    yourEmbed
+      .setTitle('Tarefas do curso')
+      .setColor(0x1DB8EE)
+      .setThumbnail('https://b.thumbs.redditmedia.com/FyLIOzKOXeG4nqUxYv4gRM9JI1Vv39T4u7WSRAbnusY.jpg')
+      .setAuthor({ name: 'Jorge', iconURL: 'https://cdn.discordapp.com/avatars/391208569317621763/7b050915dcd6c9a7a95e77fd1f30561b.webp' })
+      .setTimestamp()
+  } else if (embedType === "tarefas") {
 
-      break;
-    }
-    case "tarefas": {
-      if (!tarefa) { console.log("algo deu errado (case tarefas sem tarefa) "); break; }
-
-      //NÃO TOQUE NO ESPAÇAMENTO ABAIXO
-
-      yourEmbed.addField(`${tarefa.nome} \t ${isCurso ? tarefa.grupo === "GA" ? "🇬 🅰️" : "🇬 🅱️" : tarefa.curso ? "🖥️" : "" /*eu quero palmas por essa*/} 
+    yourEmbed.addField(`${tarefa.nome} \t ${tarefa.curso ? "🖥️" : ""}
 *${tarefa.materia}*
       `,
-        `
+      `
         ${newLine(tarefa.descricao1)} 
 
-  ${newLine(tarefa.descricao2)}             
+  ${newLine(tarefa.descricao2)}
 
   
   ${newLine(tarefa.descricao3)}
   
       ${tarefa.dataT}`, true)
-      yourEmbed.setTimestamp()
-      yourEmbed.addField('\u200B', '\u200B', true) //vertical
-    }
+    yourEmbed.setTimestamp()
+    yourEmbed.addField('\u200B', '\u200B', true) //vertical
+
   }
   return yourEmbed
 }
 
-export let cursoStarterPage: number;
+
 /**
  * Cria embeds de tarefas e coloca elas em um array
  * 
@@ -101,74 +72,42 @@ export let cursoStarterPage: number;
 export function embedPages(paginadelete: number): MessageEmbed[] {
   let tarefasJ = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
   const embeds: MessageEmbed[] = [];
-  let a = 0; //pagina atual
-  let b = 0; //pagina temporaria (se b == numero de págima por embed b = 0)
-  let c = 0; //pagina temporaria de tarefa do curso
-  const arrCurso: MessageEmbed[] = [];
-  let embedTarefasAll = new MessageEmbed();
-  let embedTarefasCurso = new MessageEmbed();
-
+  let a = 0; //pagina
+  let b = 0;
+  let newEmbed = new MessageEmbed();
   for (let x in tarefasJ) {
     if (x === 'default') continue;
-    a++;
-    b++;
+    a++; //pagina atual
+    b++; //pagina temporaria (se b == numero de págima por embed,  b = 0)
 
-    embedTarefasAll = getEmbedLayout("tarefas", embedTarefasAll, tarefasJ[x])
+    newEmbed = getEmbedLayout("tarefas", newEmbed, tarefasJ[x])
 
-    if (tarefasJ[x].grupo !== null) {
-      embedTarefasCurso = getEmbedLayout("tarefas", embedTarefasCurso, tarefasJ[x], true)
-      c++;
+    if (a % 2 === 0) {
+      newEmbed.addField('\u200B', '\u200B') //horizontal
     }
 
-    if (a % 2 === 0) { //alinhamento horizontal
-      embedTarefasAll.addField('\u200B', '\u200B') // field horizontal
-    }
 
-    if (b === paginadelete) { //se ta no hora de criar uma nova página
-
-      embedTarefasAll = getEmbedLayout("basic", embedTarefasAll)
+    if (newEmbed && b == paginadelete) {
+      newEmbed = getEmbedLayout("basic", newEmbed)
       b = 0;
-      embeds.push(embedTarefasAll)
-      embedTarefasAll = new MessageEmbed()
+      embeds.push(newEmbed)
+      newEmbed = new MessageEmbed()
     }
 
-
-    if (c === paginadelete) {
-
-      embedTarefasCurso = getEmbedLayout("curso", embedTarefasCurso)
-      arrCurso.push(embedTarefasCurso)
-      embedTarefasCurso = new MessageEmbed()
-      c = 0;
-    }
     if (getObjectSize(tarefasJ) === a) { //se está na ultima página
-
-      if (embedTarefasAll.fields.length >= 1) {
-        embedTarefasAll = getEmbedLayout("basic", embedTarefasAll)
-        embeds.push(embedTarefasAll)
-        cursoStarterPage = embeds.length;
-      }
-      if (embedTarefasCurso) {
-        if (embedTarefasCurso.fields.length >= 1) {
-          embedTarefasCurso = getEmbedLayout("curso", embedTarefasCurso)
-          arrCurso.push(embedTarefasCurso)
-        }
-
-        arrCurso.forEach((x) => {
-          embeds.push(x)
-        })
-      }
+      newEmbed = getEmbedLayout("basic", newEmbed)
+      embeds.push(newEmbed)
     }
   }
   return embeds;
 }
 
 
-
 /**
- * Quebra linha quando encontra um separador (Ex. "\n")
+ * Essa função filtra do texto o \n (quebra de linha)
  * @param {String} texto texto a ser filtrado
  * @param {String} separador quebra a linha quando encontra esse separador, optinal
- * @returns string com as quebras de linha
+ * @returns texto com as quebras de linha
  */
 export function newLine(texto: string, separador: string = "\\n") {
   let array = texto.split(" ")

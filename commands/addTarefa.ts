@@ -1,7 +1,6 @@
 import { ICommand } from 'wokcommands';
 import * as fs from 'fs';
 
-
 const data = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
 
 function saveData(data: object) {
@@ -27,7 +26,6 @@ function saveTarefa(tarefa: Tarefa) {
     materia: tarefa.getMateria(),
     dataT: tarefa.getData(),
     curso: tarefa.getCurso(),
-    grupo: tarefa.getGrupo(),
   }
   data[tarefa.getName()] = newTarefaJ
 
@@ -36,14 +34,13 @@ function saveTarefa(tarefa: Tarefa) {
 
 
 class Tarefa {
-  private _name: string;
-  private _data: string;
-  private _curso: string;
-  private _descricao1: string;
-  private _descricao2: string;
-  private _descricao3: string;
-  private _materia: string;
-  private _grupo: string | null;
+  private _name: string = '';
+  private _data: string = '';
+  private _curso: string = "";
+  private _descricao1: string = '';
+  private _descricao2: string = "";
+  private _descricao3: string = "";
+  private _materia: string = '';
 
 
   public getName(): string {
@@ -97,20 +94,7 @@ class Tarefa {
       default: return false;
     }
   }
-
-  public getGrupo(): string | null {
-    if (this._grupo === "UNDEFINED") {
-      return null
-    } else {
-      return this._grupo
-    }
-    }
-
-  public setGrupo(value: string) {
-    value.toUpperCase()
-    this._grupo = value
-  }
-
+  
   /**
    * Construtor de uma tarefa
    * 
@@ -122,7 +106,7 @@ class Tarefa {
    * @param data data de entrega
    * @param isCurso a tarefa é do curso?
    **/
-  constructor(nome: string, descricao1: string, descricao2: string, descricao3 = "", materia: string, data: string, isCurso: string, grupo: string) {
+  constructor(nome: string, descricao1: string, descricao2: string, descricao3 = "", materia: string, data: string, isCurso: string) {
     this.setName(nome)
     this.setDescricao1(descricao1)
     this.setDescricao2(descricao2)
@@ -130,7 +114,6 @@ class Tarefa {
     this.setMateria(materia)
     this.setData(data)
     this.setCurso(isCurso)
-    this.setGrupo(grupo)
 
     saveTarefa(this) //salva no JSON
   }
@@ -141,70 +124,57 @@ export default {
   description: 'Adiciona tarefa',
   slash: "both",
   ownerOnly: true,
-
+  
 
   options: [
-    {
-      name: "nome", //args[0]
-      description: "Titulo da tarefa",
-      required: true,
-      type: "STRING",
+      {
+        name: "nome", //args[0]
+        description: "Titulo da tarefa",
+        required: true,
+        type: "STRING",
     },
-    {
-      name: "descricao1",//args[1]
-      description: "SubTitulo da tarefa",
-      required: true,
-      type: "STRING",
+      {
+        name: "descricao1",//args[1]
+        description: "SubTitulo da tarefa",
+        required: true,
+        type: "STRING",
     },
-    {
-      name: "descricao2",//args[2]
-      description: "Descrição da tarefa",
-      required: true,
-      type: "STRING",
+      {
+        name: "descricao2",//args[2]
+        description: "Descrição da tarefa",
+        required: true,
+        type: "STRING",
     },
-
-    {
-      name: "materia",//args[3]
-      description: "Matéria da tarefa",
-      required: true,
-      type: "STRING",
+     
+      {
+        name: "materia",//args[3]
+        description: "Matéria da tarefa",
+        required: true,
+        type: "STRING",
     },
-    {
-      name: "data",//args[4]
-      description: "Data de entrega",
-      required: true,
-      type: "STRING",
+      {
+        name: "data",//args[4]
+        description: "Data de entrega",
+        required: true,
+        type: "STRING",
     },
-    {
-      name: "curso",//args[5]
-      description: "A tarefa é do curso?",
-      required: true,
-      type: "BOOLEAN",
+      {
+        name: "curso",//args[5]
+        description: "A tarefa é do curso?",
+        required: true,
+        type: "BOOLEAN",
     },
-    {
-      name: "grupo", //args[6]
-      description: "Grupo a ser escolhido",
-      required: true,
-      choices: [
-        { name: "GA", value: "GA" },
-
-        { name: "GB", value: "GB", },
-
-        { name: "undefined", value: "undefined" }
-      ],
-      type: "STRING"
- },
-    {
-      name: "descricao3",//args[7]
-      description: "Descrição fora do quadrado",
-      required: false,
-      type: "STRING",
+ {
+        name: "descricao3",//args[6]
+        description: "Descrição fora do quadrado",
+        required: false,
+        type: "STRING",
     },
   ],
-  callback: ({ args }) => {
+  callback: ({args}) => {
     console.log("executei /addTarefa")
-    new Tarefa(args[0], args[1], args[2], args[7], args[3], args[4], args[5], args[6]) //NÃO MUDAR ORDEM
-
+  new Tarefa(args[0], args[1], args[2], args[6], args[3], args[4], args[5]) //NÃO MUDAR ORDEM
+    
     return `tarefa enviada`
   },
 
