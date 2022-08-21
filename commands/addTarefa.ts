@@ -1,6 +1,6 @@
 import { ICommand } from 'wokcommands';
 import * as fs from 'fs';
-
+import { tarefa } from '../notComands/functions';
 
 const data = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
 
@@ -18,123 +18,23 @@ function saveData(data: object) {
   console.log("salvei data")
 }
 
-function saveTarefa(tarefa: Tarefa) {
+function saveTarefa(tarefa: tarefa) {
   const newTarefaJ = {
-    nome: tarefa.getName(),
-    descricao1: tarefa.getDescricao1(),
-    descricao2: ` \`\`\` ${tarefa.getDescricao2()} \`\`\` `,
-    descricao3: tarefa.getDescricao3(),
-    materia: tarefa.getMateria(),
-    dataT: tarefa.getData(),
-    curso: tarefa.getCurso(),
-    grupo: tarefa.getGrupo(),
+    nome: tarefa.nome,
+    descricao1: tarefa.descricao1,
+    descricao2: ` \`\`\` ${tarefa.descricao2} \`\`\` `,
+    descricao3: tarefa.descricao3,
+    materia: tarefa.materia,
+    dataT: tarefa.dataT,
+    curso: tarefa.curso,
+    grupo: tarefa.grupo,
   }
-  data[tarefa.getName()] = newTarefaJ
+  data[tarefa.nome] = newTarefaJ
 
   saveData(data)
 }
 
 
-class Tarefa {
-  private _name: string;
-  private _data: string;
-  private _curso: string;
-  private _descricao1: string;
-  private _descricao2: string;
-  private _descricao3: string;
-  private _materia: string;
-  private _grupo: string | null;
-
-
-  public getName(): string {
-    return this._name;
-  }
-  public setName(value: string) {
-    this._name = value;
-  }
-
-  public getData(): string {
-    return this._data;
-  }
-  public setData(value: string) {
-    this._data = value;
-  }
-
-  public getDescricao1(): string {
-    return this._descricao1;
-  }
-  public setDescricao1(value: string) {
-    this._descricao1 = value;
-  }
-
-  public getDescricao2(): string {
-    return this._descricao2
-  }
-  public setDescricao2(value: string) {
-    this._descricao2 = value
-  }
-  public getDescricao3(): string {
-    return this._descricao3
-  }
-  public setDescricao3(value: string) {
-    this._descricao3 = value
-  }
-  public getMateria(): string {
-    return this._materia;
-  }
-  public setMateria(value: string) {
-    this._materia = value;
-  }
-
-  public setCurso(value: string) {
-    this._curso = value
-  }
-
-  public getCurso(): boolean {
-    switch (this._curso) {
-      case "true": return true;
-      case "false": return false;
-      default: return false;
-    }
-  }
-
-  public getGrupo(): string | null {
-    if (this._grupo === "UNDEFINED") {
-      return null
-    } else {
-      return this._grupo
-    }
-  }
-
-  public setGrupo(value: string) {
-    value.toUpperCase()
-    this._grupo = value
-  }
-
-  /**
-   * Construtor de uma tarefa
-   * 
-   * @param nome nome da tarefa
-   * @param descricao1 subTitulo
-   * @param descricao2 descriçao
-   * @param descricao3 descriçao fora do quadrado optinal
-   * @param materia matéria da tarefa
-   * @param data data de entrega
-   * @param isCurso a tarefa é do curso?
-   **/
-  constructor(nome: string, descricao1: string, descricao2: string, descricao3 = "", materia: string, data: string, isCurso: string, grupo: string) {
-    this.setName(nome)
-    this.setDescricao1(descricao1)
-    this.setDescricao2(descricao2)
-    this.setDescricao3(descricao3)
-    this.setMateria(materia)
-    this.setData(data)
-    this.setCurso(isCurso)
-    this.setGrupo(grupo)
-
-    saveTarefa(this) //salva no JSON
-  }
-}
 export default {
 
   category: 'Test',
@@ -203,7 +103,19 @@ export default {
   ],
   callback: ({ args }) => {
     console.log("executei /addTarefa")
-    new Tarefa(args[0], args[1], args[2], args[7], args[3], args[4], args[5], args[6]) //NÃO MUDAR ORDEM
+    const newTarefa: tarefa = {
+      nome: args[0],
+      descricao1: args[1],
+      descricao2: args[2],
+      materia: args[3],
+      dataT: args[4],
+      curso: args[5] == "true" ? true : false,
+      grupo: args[6],
+      descricao3: args[7],
+
+    }
+    
+    saveTarefa(newTarefa)
 
     return `tarefa enviada`
   },

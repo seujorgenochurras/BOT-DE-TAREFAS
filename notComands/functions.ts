@@ -4,15 +4,16 @@ import * as fs from "fs"
 
 
 
-export interface tarefaInterface {
-  nome: string
-  curso: boolean
-  materia: string
-  descricao1: string
-  descricao2: string
-  descricao3: string
-  dataT: string
-  grupo: string
+export interface tarefa {
+  nome: string;
+  dataT: string;
+  curso: boolean;
+  descricao1: string;
+  descricao2: string;
+  descricao3?: string;
+  materia: string;
+  grupo: string;
+
 }
 
 
@@ -45,8 +46,8 @@ export function getObjectSize(yourObject: Object): number {
  * @param tarefa se for do layout tarefas, preciso saber as informações das tarefas
  * @returns seu embed com o layout
  */
-function getEmbedLayout(embedType: embedType, yourEmbed: MessageEmbed, tarefa?: tarefaInterface, isCurso?: boolean): MessageEmbed {
-
+function getEmbedLayout(embedType: embedType, yourEmbed: MessageEmbed, tarefa?: tarefa, isCurso?: boolean): MessageEmbed {
+  
   switch (embedType) {
     case "basic": {
       yourEmbed
@@ -81,8 +82,8 @@ function getEmbedLayout(embedType: embedType, yourEmbed: MessageEmbed, tarefa?: 
   ${newLine(tarefa.descricao2)}             
 
   
-  ${newLine(tarefa.descricao3)}
-  
+  ${tarefa.descricao3 ? newLine(tarefa.descricao3) : ""}
+
       ${tarefa.dataT}`, true)
       yourEmbed.setTimestamp()
       yourEmbed.addField('\u200B', '\u200B', true) //vertical
@@ -114,7 +115,7 @@ export function embedPages(paginadelete: number): MessageEmbed[] {
     b++;
 
     embedTarefasAll = getEmbedLayout("tarefas", embedTarefasAll, tarefasJ[x])
-
+   
     if (tarefasJ[x].grupo !== null) {
       embedTarefasCurso = getEmbedLayout("tarefas", embedTarefasCurso, tarefasJ[x], true)
       c++;
