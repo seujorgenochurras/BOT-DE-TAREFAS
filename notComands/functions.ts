@@ -2,7 +2,9 @@ import { MessageEmbed, MessageEmbedThumbnail } from "discord.js";
 import * as fs from "fs"
 
 
-
+class Tarefa{ //coming soon
+  
+}
 
 export interface tarefa {
   nome: string;
