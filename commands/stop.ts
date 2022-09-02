@@ -7,7 +7,7 @@ export default {
   slash: 'both',
   ownerOnly: true,
  
-  callback: ({ message, interaction}) => {
+  callback: () => {
     console.log("DESLIGANDO O BOT!")
     const newDate = new Date()
     console.log(`${newDate.getHours()}:${newDate.getMinutes() }:${newDate.getSeconds()}`)

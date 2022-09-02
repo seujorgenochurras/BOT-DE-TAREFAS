@@ -1,6 +1,6 @@
 import { ICommand } from 'wokcommands';
 import * as fs from 'fs';
-import { tarefa } from '../notComands/functions';
+import { materias, tarefa } from '../notComands/functions';
 
 const data = JSON.parse(fs.readFileSync('./commands/tarefas.json', 'utf-8'))
 
@@ -37,11 +37,10 @@ function saveTarefa(tarefa: tarefa) {
 
 export default {
 
-  category: 'Test',
+  category: 'Testawdawda',
   description: 'Adiciona tarefa',
   slash: "both",
   ownerOnly: true,
-
 
   options: [
     {
@@ -65,9 +64,13 @@ export default {
 
     {
       name: "materia",//args[3]
+      type: "STRING",
       description: "Matéria da tarefa",
       required: true,
-      type: "STRING",
+      choices: materias.forEach((x) => ({
+        name: x.name,
+        value: x.name,
+      }))
     },
     {
       name: "data",//args[4]
@@ -101,6 +104,7 @@ export default {
       type: "STRING",
     },
   ],
+  
   callback: ({ args }) => {
     console.log("executei /addTarefa")
     const newTarefa: tarefa = {

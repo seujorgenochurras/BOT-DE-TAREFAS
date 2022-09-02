@@ -3,7 +3,7 @@ import * as fs from "fs"
 
 
 class Tarefa{ //coming soon
-  
+
 }
 
 export interface tarefa {
@@ -211,3 +211,35 @@ export function saveData(data: object, consoleLog: boolean = true) {
   return;
 }
 
+
+
+
+
+export const materias = [{
+  name: "Química",
+        },
+{
+  name: "Matemática",
+        },
+{
+  name: "História",
+        },
+{
+  name: "Física",
+        },
+{
+  name: "Arte",
+        },
+{
+  name: "Português",
+        },
+{
+  name: "Inglês",
+        },
+{
+  name: "PDE",
+        },
+{
+  name: "Educa. Fisica",
+        },
+]

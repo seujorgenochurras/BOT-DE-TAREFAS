@@ -30,11 +30,10 @@ export default {
   //     description: "Tarefa a ser deletada",
   //     type: 3,
   //     required: false,
-  //     // choices: tarefas.map((tarefas) => ({
-        
-  //     //   name: tarefas,
-  //     //   value: tarefas,
-  //     // }))
+  //     choices: tarefas.map((tarefas) => ({
+  //       name: tarefas,
+  //       value: tarefas,
+  //     }))
   //   }
   // ],
   

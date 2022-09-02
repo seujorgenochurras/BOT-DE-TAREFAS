@@ -34,6 +34,13 @@ const getRow = (id: string, endRow?: boolean) => {
     ),
     row.addComponents(
       new MessageButton()
+        .setCustomId("cursos")
+        .setStyle("SECONDARY")
+        .setEmoji("🖥️")
+        .setDisabled(endRow === true)
+    ),
+    row.addComponents(
+      new MessageButton()
         .setCustomId("proximo_embed")
         .setStyle(endRow === true ? "DANGER" : "SECONDARY")
         .setEmoji("➡️")
@@ -41,15 +48,10 @@ const getRow = (id: string, endRow?: boolean) => {
     )
   row.addComponents(
     new MessageButton()
-      .setCustomId("cursos")
-      .setStyle("SECONDARY")
-      .setEmoji("🖥️")
-  )
-  row.addComponents(
-    new MessageButton()
       .setCustomId("ultimo")
       .setStyle("SECONDARY")
       .setEmoji("⏭️")
+       .setDisabled(pages[id] === embeds.length - 1 || endRow === true)
   )
 
 

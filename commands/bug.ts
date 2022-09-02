@@ -10,7 +10,7 @@ export default {
   expectedArgs: "<Bug>",
   expectedArgsTypes: ["STRING"],
 
-  callback: ({ user, args}) => {
+  callback: ({ args}) => {
     client.users.fetch("391208569317621763").then(user => {
       try {
         user.send(`${args[0]} \n enviado por:${user.username}|| ${user.id} ${user.avatarURL()} `)
