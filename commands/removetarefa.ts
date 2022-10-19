@@ -22,7 +22,7 @@ export default {
   ownerOnly: true,
 
   category: 'Test',
-  description: "MREU tarefa",
+  description: "deleta tarefa",
   slash: 'both',
   // options: [
   //   {

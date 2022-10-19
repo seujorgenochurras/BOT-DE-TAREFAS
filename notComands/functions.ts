@@ -3,10 +3,6 @@ import * as fs from "fs"
 
 
 class Tarefa{ //coming soon
-
-}
-
-export interface tarefa {
   nome: string;
   dataT: string;
   curso: boolean;
@@ -16,14 +12,20 @@ export interface tarefa {
   materia: string;
   grupo: string;
 
+
+  constructor(tarefa: tarefa) {
+    this.nome = tarefa.nome
+    this.dataT = tarefa.dataT
+    this.curso = tarefa.curso
+    this.descricao1 = tarefa.descricao1
+    this.descricao2 = tarefa.descricao2
+    this.descricao3 = tarefa.descricao3
+    this.materia = tarefa.materia
+    this.grupo = tarefa.grupo
+  }
+  
+
 }
-
-
-export type embedType =
-  | "basic"
-  | "curso"
-  | "tarefas"
-  | null
 
 
 /**
@@ -243,3 +245,21 @@ export const materias = [{
   name: "Educa. Fisica",
         },
 ]
+export interface tarefa {
+  nome: string;
+  dataT: string;
+  curso: boolean;
+  descricao1: string;
+  descricao2: string;
+  descricao3?: string;
+  materia: string;
+  grupo: string;
+
+}
+
+
+export type embedType =
+  | "basic"
+  | "curso"
+  | "tarefas"
+  | null
